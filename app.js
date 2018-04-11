@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const userRoutes = require('./api/routes/users');
+const userRoutes = require('./api/routes/master/m_users');
 
 //conect to mongo
 mongoose.connect("mongodb://localhost:27017/ProjectEvaluasiAPI");
