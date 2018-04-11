@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const userRoutes = require('./api/routes/master/m_users');
+const employeeRoutes = require('./api/routes/master/m_employees');
 
 //conect to mongo
 mongoose.connect("mongodb://localhost:27017/ProjectEvaluasiAPI");
@@ -23,6 +24,7 @@ app.use((req,res,next)=>{
 });
 
 app.use('/api/users', userRoutes);
+app.use('/api/employees', employeeRoutes);
 
 //utnuk handling error
 app.use((req, res, next)=>{
