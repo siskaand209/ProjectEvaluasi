@@ -1,0 +1,28 @@
+{
+  "name": "projectevaluasiapi",
+  "version": "1.0.0",
+  "description": "Mini Project Evaluasi",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siskaand209/ProjectEvaluasiAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/siskaand209/ProjectEvaluasiAPI/issues"
+  },
+  "homepage": "https://github.com/siskaand209/ProjectEvaluasiAPI#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  }
+}
