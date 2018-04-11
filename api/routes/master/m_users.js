@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 // User Model
-const User = require('../models/user');
+const User = require('../../models/master/m_user');
 
 
 //get all
