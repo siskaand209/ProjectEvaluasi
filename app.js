@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express')
 const app = express();
 
 const bodyParser = require('body-parser');
@@ -7,9 +7,11 @@ const mongoose = require('mongoose');
 const userRoutes = require('./api/routes/master/m_users');
 const roleRoutes = require('./api/routes/master/m_roles');
 const employeeRoutes = require('./api/routes/master/m_employees');
+// const menuAccessRoutes = require('./api/routes/master/m_menuaccesses')
 
 //conect to mongo
-mongoose.connect("mongodb://localhost:27017/ProjectEvaluasiAPI");
+mongoose.connect("mongodb://localhost:27017/dummy");
+mongoose.Promise = global.Promise;
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -27,8 +29,16 @@ app.use((req,res,next)=>{
 app.use('/api/users', userRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/employees', employeeRoutes);
+// app.use('/api/menuaccess', menuAccessRoutes);
 
-//utnuk handling error
+// untuk handling error
+// app.use((req, res, next) => {
+//     console.log("Server is Running...");
+//     res.status(200).json({
+//         message: "Hi, I'm learning NodeJS"
+//     });
+// });
+
 app.use((req, res, next)=>{
     const error = new Error('Not Found');
     error.status = 404;
