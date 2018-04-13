@@ -9,7 +9,5 @@ const menuAccessSchema = mongoose.Schema({
     createdDate : { type: Date, required: true, trim: true, default: Date.now() },
     updatedBy : { type: String, required: false },
     updatedDate : { type: Date, required: false, trim: true }
-    
-    
 })
 module.exports = mongoose.model('MenuAccess', menuAccessSchema, 'menuaccesses');
