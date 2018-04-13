@@ -4,10 +4,12 @@ const mongoose = require('mongoose');
 
 // User Model
 const User = require('../../models/master/m_user');
+const Role = require('../../models/master/m_role');
 
 //get all
 router.get('/', (req, res, next) => {
     User.find()
+        .populate('role', 'code name')
         .exec()
         .then(doc => {
             res.status(200).json(doc);

@@ -38,19 +38,19 @@ router.get('/:id', (req, res, next) => {
 
 //insert
 router.post('/', (req, res, next) => {
-    const newMenu = new Menu({
-        _id : new mongoose.Types.ObjectId(),
-        code : req.body.code,
-        name : req.body.name,
-        controller : req.body.controller,
-        parentId : req.body.parentId,
-        isDelete : req.body.isDelete,
-        createdBy: req.body.createdBy,
-        createdDate : req.body.createdDate,
-        updatedBy: req.body.updatedBy
-    });
+    GetNewCode(response => {
 
-    newMenu.save()
+        const newMenu = new Menu({
+            _id : new mongoose.Types.ObjectId(),
+            code : response,
+            name : req.body.name,
+            controller : req.body.controller,
+            parentId : req.body.parentId,
+            isDelete : req.body.isDelete,
+            createdBy: req.body.createdBy
+        });
+        
+        newMenu.save()
         .then(result => {
             console.log(result);
             res.status(201).json(result);
@@ -61,7 +61,26 @@ router.post('/', (req, res, next) => {
                 error : err
             });
         })
+    })
 });
+
+function GetNewCode(callback) {
+    var newCode = "M";
+    var lastCode = newCode + "0001";
+
+    Menu.findOne({code: new RegExp(newCode, 'i')})
+        .sort({code: -1})
+        .exec((err, doc) => {
+            if (doc !=null){
+                var arr = doc.code.split("M");
+                var inc = parseInt(arr[1]) + 1;
+                lastCode = newCode + ("0000"+inc).slice(-4);
+                return callback(lastCode);
+            }else {
+                return callback(lastCode);
+            }
+        })
+};
 
 //update
 router.patch('/:id',(req, res, next) => {
@@ -77,8 +96,8 @@ router.patch('/:id',(req, res, next) => {
             console.log(err);
             res.status(500).json({
                 error : err
-            })
-        })
+            });
+        });
 });
 
 //delete
