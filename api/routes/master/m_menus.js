@@ -2,12 +2,11 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-// User Model
-const User = require('../../models/master/m_user');
+const Menu = require('../../models/master/m_menu');
 
 //get all
 router.get('/', (req, res, next) => {
-    User.find()
+    Menu.find()
         .exec()
         .then(doc => {
             res.status(200).json(doc);
@@ -21,35 +20,37 @@ router.get('/', (req, res, next) => {
 });
 
 //get by id
-router.get('/:id', (req, res, next) =>{
+router.get('/:id', (req, res, next) => {
     const id = req.params.id;
-    User.findById(id)
+    Menu.findById(id)
         .exec()
         .then(result => {
             console.log(result);
             res.status(200).json(result);
         })
-        .catch(err =>{
+        .catch(err => {
             console.log(err);
             res.status(500).json({
-                error : err
+                error: err
             })
         })
 });
 
 //insert
 router.post('/', (req, res, next) => {
-    const newUser = new User({
+    const newMenu = new Menu({
         _id : new mongoose.Types.ObjectId(),
-        username : req.body.username,
-        password : req.body.password,
-        mRoleId : req.body.mRoleId,
-        mEmployeeId : req.body.mEmployeeId,
+        code : req.body.code,
+        name : req.body.name,
+        controller : req.body.controller,
+        parentId : req.body.parentId,
         isDelete : req.body.isDelete,
-        createdBy: req.body.createdBy
+        createdBy: req.body.createdBy,
+        createdDate : req.body.createdDate,
+        updatedBy: req.body.updatedBy
     });
 
-    newUser.save()
+    newMenu.save()
         .then(result => {
             console.log(result);
             res.status(201).json(result);
@@ -63,32 +64,32 @@ router.post('/', (req, res, next) => {
 });
 
 //update
-router.patch('/:id', (req,res, next) =>{
-    var newM = new User(req.body);
-    newM.updateDate = Date.now();
+router.patch('/:id',(req, res, next) => {
+    var newA = new Menu(req.body);
+    newA.updateDate = Date.now();
     const id = req.params.id;
-    User.update({_id : id}, {$set : newM })
+    Menu.update({_id: id}, { $set: newA})
         .exec()
-        .then( result =>{
+        .then (result => {
             res.status(200).json(result);
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({
-                error:err
+                error : err
             })
         })
 });
 
 //delete
-router.delete('/:id', (req, res, next) =>{
+router.delete('/:id', (req, res, next) => {
     const id = req.params.id;
-    User.remove({_id : id})
+    Menu.remove({_id: id})
     .exec()
-    .then( result =>{
+    .then ( result => {
         res.status(200).json(result);
     })
-    .catch(err => {
+    .catch( err => {
         console.log(err);
         res.status(500).json({
             error : err
