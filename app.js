@@ -1,11 +1,12 @@
 const express = require('express');
+
 const app = express();
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const userRoutes = require('./api/routes/master/m_users');
-
+const menuRoutes = require('./api/routes/master/m_menus');
 //conect to mongo
 mongoose.connect("mongodb://localhost:27017/ProjectEvaluasiAPI");
 
@@ -23,6 +24,8 @@ app.use((req,res,next)=>{
 });
 
 app.use('/api/users', userRoutes);
+app.use('/api/menus', menuRoutes);
+
 
 //utnuk handling error
 app.use((req, res, next)=>{
