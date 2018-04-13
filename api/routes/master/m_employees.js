@@ -48,9 +48,7 @@ router.post('/', (req, res, next) => {
         email : req.body.email,
         isDelete : req.body.isDelete,
         createdBy : req.body.createdBy,
-        createdDate : req.body.createdDate,
-        updatedBy : req.body.updatedBy,
-        updatedDate : req.body.updatedDate
+       
     });
 
     newEmployee.save()

@@ -8,8 +8,8 @@ const employeeSchema = mongoose.Schema({
     mCompanyId : {type: String, require:true},
     email : {type: String, require: true},
     isDelete : {type: Boolean, require: true, default: 0},
-    createdBy : {type: String, require: true},
-    createdDate : {type: Date, require: true, trim: true, default : Date.now() },
+    createdBy : {type: String, require: false, trim: true},
+    createdDate : {type: Date, require: true, default : Date.now() },
     updatedBy : {type: String, require: true },
     updatedDate : {type: Date, require: true, trim: true,}
 

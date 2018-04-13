@@ -9,7 +9,7 @@ const userRoutes = require('./api/routes/master/m_users');
 const menuRoutes = require('./api/routes/master/m_menus');
 const roleRoutes = require('./api/routes/master/m_roles');
 const employeeRoutes = require('./api/routes/master/m_employees');
-// const menuAccessRoutes = require('./api/routes/master/m_menuaccesses')
+const menuAccessRoutes = require('./api/routes/master/m_menuaccesses')
 
 //conect to mongo
 mongoose.connect("mongodb://localhost:27017/ProjectEvaluasiAPI");
@@ -33,6 +33,7 @@ app.use('/api/menus', menuRoutes);
 
 app.use('/api/roles', roleRoutes);
 app.use('/api/employees', employeeRoutes);
+app.use('/api/menuaccess', menuAccessRoutes);
 
 
 app.use((req, res, next)=>{
