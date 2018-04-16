@@ -8,10 +8,12 @@ const companySchema = mongoose.Schema({
     phone : {type : String, required : true},
     email : {type : String, required : true},
     isDelete : {type : Boolean, required : true, default : 0},
-    createdBy : {type : String, required : false, trim : true},
-    createdDate : {type : Date, required : true, trim : true, default : Date.now()},
-    updatedBy : {type : String, required : true},
-    updatedDate : {type : Date, required : true, trim : true } 
-});
+    createdBy : {type : String, required : true, trim : true},
+    createdDate : {type : Date, required : true, default : Date.now()},
+    updatedBy : {type : String, required : false },
+    updatedDate : {type : Date, required : false } 
+},
+{timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate' }}
+);
 
 module.exports = mongoose.model('Company', companySchema, 'companies');

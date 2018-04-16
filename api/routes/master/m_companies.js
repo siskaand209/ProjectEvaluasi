@@ -39,30 +39,49 @@ router.get('/:id', (req, res, next) => {
 
 //Post
 router.post('/', (req, res, next) => {
-    const newCompany = new Company({
-        _id : new mongoose.Types.ObjectId(),
-        code : req.body.code,
-        name : req.body.name,
-        adress : req.body.adress,
-        phone : req.body.phone,
-        email : req.body.email,
-        isDelete : req.body.is_delete,
-        createdBy : req.body.created_by
-    });
-
-    newCompany.save()
-        .then(result => {
-            console
-            .log(result);
-            res.status(201).json(result);   
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error : err
-            });
-        })
+    GetNewCode(response => {
+        const newCompany = new Company({
+            _id : new mongoose.Types.ObjectId(),
+            code : response,
+            name : req.body.name,
+            adress : req.body.adress,
+            phone : req.body.phone,
+            email : req.body.email,
+            isDelete : req.body.is_delete,
+            createdBy : req.body.createdBy
+        });
+        
+        newCompany.save()
+            .then(result => {
+                console.log(result);
+                res.status(201).json(result);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    error : err
+                });
+            })
+    })
 });
+
+function GetNewCode(callback){
+    var newCode = "CP";
+    var lastCode = newCode + "0001";
+
+    Company.findOne({code: new RegExp(newCode, 'i')})
+            .sort({code: -1})
+            .exec((err, doc)=> {
+                if (doc != null) {
+                    var arr = doc.code.split("P");
+                    var inc = parseInt (arr [1]) + 1;
+                    lastCode = newCode + ("0000" + inc).slice (-4);
+                    return callback (lastCode);
+                }else{
+                    return callback(lastCode);
+                }
+            })
+}
 
 //Edit dan update
 router.patch('/:id', (req, res, next) => {
