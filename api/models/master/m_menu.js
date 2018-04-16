@@ -8,9 +8,9 @@ const menuSchema = mongoose.Schema({
     parentId: { type: String },
     isDelete:  { type: Boolean, required: true, default: 0 },
     createdBy : { type: String, required: true },
-    createdDate : { type: Date, required: true, trim: true, default: Date.now() },
-    updatedBy : { type: String},
-    updateDate : { type: Date, trim: true }
-});
+    updatedBy : { type: String},    
+},
+{timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate'}}
+)
 
 module.exports = mongoose.model('Menu', menuSchema, 'menus');
