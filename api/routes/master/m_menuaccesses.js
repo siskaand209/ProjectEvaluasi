@@ -4,9 +4,14 @@ const mongoose = require('mongoose');
 
 // m_role model
 const MenuAccess = require('../../models/master/m_menu_access');
+const Role = require('../../models/master/m_role');
+const Menu = require('../../models/master/m_menu')
+
 //get all
 router.get('/', (req, res, next) => {
     MenuAccess.find()
+        .populate({ path: 'role', select: 'code name description isDelete createdBy updatedBy' })
+        .populate({ path: 'menu', select: 'code name controller parentId createdBy updatedBy' })
         .exec()
         .then(doc => {
             res.status(200).json(doc);
@@ -19,10 +24,44 @@ router.get('/', (req, res, next) => {
         });
 });
 
+//get All Role
+router.get('/roles/:id', (req, res, next) => {
+    var id = req.params.id;
+    GetRole(id, response => {
+        Role.findOne({ _id: id })
+            .exec()
+            .then(doc => {
+                res.status(200).json({
+                    role: doc,
+                    menuaccess: response
+                });
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    error: err
+                });
+            });
+    });
+});//end get all role
+
+function GetRole(mRoleId, callback) {
+    MenuAccess.findOne({ role: mRoleId })
+        .exec((err, doc) => {
+            if (doc != null) {
+                return callback(doc);
+            } else {
+                return callback(null)
+            }
+        });
+}
+
+
 //get  by id
 router.get('/:id', (req, res, next) => {
     const id = req.params.id;
     MenuAccess.findById(id)
+        .populate('mMenuId', '_id code name controller parentId createdBy createdDate')
+        .populate('mRoleId', '_id code name description isDelete createdBy updatedBy')
         .exec()
         .then(result => {
             console.log(result);
@@ -40,8 +79,8 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
     const newMenuAccess = new MenuAccess({
         _id: new mongoose.Types.ObjectId(),
-        mRoleId: req.body.mRoleId,
-        mMenuId: req.body.mMenuId,
+        role: req.body.role,
+        menu: req.body.menu,
         uploadedBy: req.body.uploadedBy,
         isDelete: req.body.isDelete,
         createdBy: req.body.createdBy,
@@ -55,7 +94,7 @@ router.post('/', (req, res, next) => {
         .catch(err => {
             console.log(err);
             res.status(500).json({
-                error : err
+                error: err
             });
         })
 });
@@ -64,7 +103,7 @@ router.post('/', (req, res, next) => {
 router.patch('/:id', (req, res, next) => {
     var newData = new MenuAccess(req.body);
     MenuAccess.updatedDate = Date.now();
-    
+
     const id = req.params.id;
 
     MenuAccess.update({ _id: id }, { $set: newData })
@@ -83,7 +122,7 @@ router.patch('/:id', (req, res, next) => {
 //delete
 router.delete('/:id', (req, res, next) => {
     const id = req.params.id;
-    MenuAccess.remove({ _id : id })
+    MenuAccess.remove({ _id: id })
         .exec()
         .then(result => {
             res.status(200).json(result);
@@ -91,7 +130,7 @@ router.delete('/:id', (req, res, next) => {
         .catch(err => {
             console.log(err);
             res.status(500).json({
-                error : err
+                error: err
             })
         })
 });
