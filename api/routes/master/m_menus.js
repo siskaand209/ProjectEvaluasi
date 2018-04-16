@@ -77,7 +77,7 @@ function GetNewCode(callback) {
                 lastCode = newCode + ("0000"+inc).slice(-4);
                 return callback(lastCode);
             }else {
-                return callback(lastCode);
+                return callback(lastCode); 
             }
         })
 };
