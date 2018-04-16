@@ -7,9 +7,9 @@ const roleSchema = mongoose.Schema({
     description : { type: String, required: true },
     isDelete : { type: Boolean, required: true, default: 0 },
     createdBy : { type: String, required: false, trim: true },
-    createdDate : { type: Date, required: true, default: Date.now() },
-    updatedBy : { type: String, required: false, trim: true},
-    updatedDate : { type: Date, required: false }
-});
+    updatedBy : { type: String, required: false, trim: true}
+    },
+    {timestamps : {createdAt : "createdDate", updatedAt : "updatedDate"}}
+);
 
 module.exports = mongoose.model('Role', roleSchema, 'roles');

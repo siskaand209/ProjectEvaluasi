@@ -42,12 +42,12 @@ router.post('/', (req, res, next) => {
         _id: new mongoose.Types.ObjectId(),
         mRoleId: req.body.mRoleId,
         mMenuId: req.body.mMenuId,
+        uploadedBy: req.body.uploadedBy,
         isDelete: req.body.isDelete,
         createdBy: req.body.createdBy,
-        uploadedBy: req.body.uploadedBy
     });
 
-    MenuAccess.save()
+    newMenuAccess.save()
         .then(doc => {
             console.log(doc);
             res.status(201).json(doc);

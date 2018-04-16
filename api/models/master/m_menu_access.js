@@ -4,12 +4,11 @@ const menuAccessSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     mRoleId: { type: String, required: true },
     mMenuId: { type: String, required: true },
-    isDelete : { type: Boolean, required: true, default: 0 },
-    createdBy : { type: String, required: true },
-    createdDate : { type: Date, required: true, trim: true, default: Date.now() },
-    updatedBy : { type: String, required: false },
-    updatedDate : { type: Date, required: false, trim: true }
-    
-    
-})
+    isDelete: { type: Boolean, required: true, default: false },
+    createdBy: { type: String, required: true, trim: true, },
+    updatedBy: { type: String, required: false, trim: true },
+},
+{timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate' }}
+)
+
 module.exports = mongoose.model('MenuAccess', menuAccessSchema, 'menuaccesses');
