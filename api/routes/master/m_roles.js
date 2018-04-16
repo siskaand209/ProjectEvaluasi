@@ -7,6 +7,7 @@ const Role = require('../../models/master/m_role');
 //get all
 router.get('/', (req, res, next) => {
     Role.find()
+        .where('isDelete').equals(false)
         .exec()
         .then(doc => {
             res.status(200).json(doc);
@@ -104,6 +105,25 @@ router.patch('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
     const id = req.params.id;
     Role.remove({ _id: id })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+});
+
+router.put('/:id', (req, res, next) => {
+    var newData = new Role(req.body);
+    newData.isDelete = true;
+
+    const id = req.params.id;
+
+    Role.update({ _id: id }, { $set: newData })
         .exec()
         .then(result => {
             res.status(200).json(result);
