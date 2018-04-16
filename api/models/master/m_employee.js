@@ -5,14 +5,13 @@ const employeeSchema = mongoose.Schema({
     code : {type: String, require: true},
     firstName : {type: String, require: true},
     lastName : {type: String, require: true},
-    mCompanyId : {type: String, require:true},
+    mCompanyId : {type: mongoose.Schema.Types.ObjectId, ref: 'companys', require: true},
     email : {type: String, require: true},
     isDelete : {type: Boolean, require: true, default: 0},
     createdBy : {type: String, require: false, trim: true},
-    createdDate : {type: Date, require: true, default : Date.now() },
     updatedBy : {type: String, require: true },
-    updatedDate : {type: Date, require: true, trim: true,}
-
-});
+},
+{timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate' }}
+);
 
 module.exports = mongoose.model('Employee', employeeSchema, 'employees');

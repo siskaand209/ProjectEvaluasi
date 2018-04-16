@@ -8,6 +8,8 @@ const Employee = require('../../models/master/m_employee');
 //get all 
 router.get('/', (req, res, next) => {
     Employee.find()
+            .populate('companys', 'code name')
+            .where('isDelete').equals(false)
             .exec()
             .then(doc => {
                 res.status(200).json(doc);
@@ -82,6 +84,25 @@ router.patch('/:id', (req, res, next) => {
             })
         })
 });
+
+router.put('/:id', (req, res, next) => {
+    var newM = new Employee(req.body);
+    newM.isDelete = true;
+    //console.log(newM);
+    const id = req.params.id;
+    Employee.update({ _id: id }, { $set: newM })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+});
+
 
 //delete
 router.delete('/:id', (req,res,next) => {
