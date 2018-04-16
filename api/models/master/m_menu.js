@@ -11,6 +11,7 @@ const menuSchema = mongoose.Schema({
     createdDate : { type: Date, required: true, trim: true, default: Date.now() },
     updatedBy : { type: String},
     updateDate : { type: Date, trim: true }
+    
 });
 
 module.exports = mongoose.model('Menu', menuSchema, 'menus');
