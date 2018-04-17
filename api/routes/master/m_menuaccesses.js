@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
     MenuAccess.find()
         .populate({ path: 'role', select: 'code name description isDelete createdBy updatedBy' })
         .populate({ path: 'menu', select: 'code name controller parentId createdBy updatedBy' })
+        .where('isDelete').equals(false)
         .exec()
         .then(doc => {
             res.status(200).json(doc);
@@ -62,6 +63,7 @@ router.get('/:id', (req, res, next) => {
     MenuAccess.findById(id)
         .populate('mMenuId', '_id code name controller parentId createdBy createdDate')
         .populate('mRoleId', '_id code name description isDelete createdBy updatedBy')
+        .where('isDelete').equals(false)
         .exec()
         .then(result => {
             console.log(result);
@@ -134,5 +136,27 @@ router.delete('/:id', (req, res, next) => {
             })
         })
 });
+
+
+//put
+router.put('/:id', (req, res, next) => {
+    var newData = new MenuAccess(req.body);
+    newData.isDelete = true;
+
+    const id = req.params.id;
+
+    MenuAccess.update({ _id: id }, { $set: newData })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+});//end put
+
 
 module.exports = router;
