@@ -68,11 +68,11 @@ router.post('/', (req, res, next) => {
 
 //update
 router.patch('/:id', (req, res, next) => {
-    var newM = new Employee(req.body);
-    newM.updatedDate = Date.now();
+    var newEmployee = new Employee(req.body);
+    newEmployee.updatedDate = Date.now();
     //console.log(newM);
     const id = req.params.id;
-    Employee.update({ _id: id }, { $set: newM })
+    Employee.update({ _id: id }, { $set: newEmployee })
         .exec()
         .then(result => {
             res.status(200).json(result);
@@ -86,11 +86,11 @@ router.patch('/:id', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-    var newM = new Employee(req.body);
-    newM.isDelete = true;
+    var newEmployee = new Employee(req.body);
+    newEmployee.isDelete = true;
     //console.log(newM);
     const id = req.params.id;
-    Employee.update({ _id: id }, { $set: newM })
+    Employee.update({ _id: id }, { $set: newEmployee })
         .exec()
         .then(result => {
             res.status(200).json(result);
