@@ -5,11 +5,13 @@ const mongoose = require('mongoose');
 // User Model
 const User = require('../../models/master/m_user');
 const Role = require('../../models/master/m_role');
+const Employee = require( '../../models/master/m_employee');
 
 //get all
 router.get('/', (req, res, next) => {
     User.find()
-        .populate('role', 'code name')
+        .populate('role')
+        .populate('employee')
         .exec()
         .then(doc => {
             res.status(200).json(doc);
@@ -26,6 +28,8 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) =>{
     const id = req.params.id;
     User.findById(id)
+        .populate('role')
+        .populate('employee')
         .exec()
         .then(result => {
             console.log(result);

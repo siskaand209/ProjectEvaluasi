@@ -5,7 +5,7 @@ const userSchema = mongoose.Schema({
     username: { type: String, required: true },
     password : { type: String, required: true },
     mRoleId :{ type: mongoose.Schema.Types.ObjectId, ref: 'Role', required: true},
-    mEmployeeId: { type: String, required: true },
+    mEmployeeId: {type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true },
     isDelete : { type: Boolean, required: true, default: 0 },
     createdBy : { type: String, required: false },
     updatedBy : { type: String },
