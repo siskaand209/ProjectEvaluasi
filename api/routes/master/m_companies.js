@@ -8,8 +8,9 @@ const Company = require('../../models/master/m_company');
 //Get all
 router.get('/', (req, res, next) => {
     Company.find()
-        .exec()
-        .then(doc => {
+           .where('isDelete').equals(false)
+           .exec()
+           .then(doc => {
             res.status(200).json(doc);
         })
         .catch(err => {
@@ -87,6 +88,24 @@ function GetNewCode(callback){
 router.patch('/:id', (req, res, next) => {
     var newT = new Company (req.body);
     newT.updatedDate = Date.now();
+    //console.log(newM);
+    const id = req.params.id;
+    Company.update({ _id: id }, { $set: newT })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+});
+
+router.put('/:id', (req, res, next) => {
+    var newT = new Company (req.body);
+    newT.isDelete = true;
     //console.log(newM);
     const id = req.params.id;
     Company.update({ _id: id }, { $set: newT })

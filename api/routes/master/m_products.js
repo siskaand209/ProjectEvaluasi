@@ -8,6 +8,7 @@ const Product = require('../../models/master/m_product');
 //get all
 router.get('/', (req, res, next) => {
     Product.find()
+            .where('isDelete').equals(false)
             .exec()
             .then(doc => {
                 res.status(200).json(doc);
@@ -111,6 +112,25 @@ router.delete('/:id', (req, res, next) => {
                 message : err
             });
         });
+});
+
+router.put('/:id', (req, res, next) => {
+    var newData = new Product(req.body);
+    newData.isDelete = true;
+
+    const id = req.params.id;
+
+    Product.update({ _id: id }, { $set: newData })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
 });
 
 module.exports = router;
