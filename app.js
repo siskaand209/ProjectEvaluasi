@@ -15,7 +15,7 @@ const companiesRoutes = require('./api/routes/master/m_companies');
 
 //conect to mongo
 //password admin01
-// mongoose.connect("mongodb://localhost:27017/ProjectEvaluasiAPI");
+//  mongoose.connect("mongodb://localhost:27017/ProjectEvaluasiAPI");
 mongoose.connect("mongodb://admin01:admin01@ds247439.mlab.com:47439/projectevaluasi");
 mongoose.Promise = global.Promise;
 
@@ -39,7 +39,6 @@ app.use('/api/menus', menuRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/employees', employeeRoutes);
 app.use('/api/menuaccesses', menuAccessRoutes);
-app.use('/api/companies', companiesRoutes);
 
 
 app.use((req, res, next)=>{

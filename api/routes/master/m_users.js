@@ -10,8 +10,9 @@ const Employee = require( '../../models/master/m_employee');
 //get all
 router.get('/', (req, res, next) => {
     User.find()
-        .populate('role')
-        .populate('employee')
+        .populate('role','code name description')
+        .populate({path: 'employee',select: '_id code mCompanyId firstName lastName'})
+        .where('isDelete').equals(false)
         .exec()
         .then(doc => {
             res.status(200).json(doc);
@@ -28,8 +29,9 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) =>{
     const id = req.params.id;
     User.findById(id)
-        .populate('role')
-        .populate('employee')
+        .populate('role', ['code name description'])
+        .populate({path: 'employee',select: '_id code mCompanyId firstName lastName'})
+        .where('isDelete').equals(false)   
         .exec()
         .then(result => {
             console.log(result);
@@ -100,6 +102,24 @@ router.delete('/:id', (req, res, next) =>{
             error : err
         })
     })
+});
+
+router.put('/:id', (req,res,next) => {
+    var newData = new UserAccess(req.body);
+    newData.isDelete = true;
+
+    const id = req.params.id;
+
+    User.update({_id: id}, {$set: newData })
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            })
+        })
 });
 
 module.exports = router;
