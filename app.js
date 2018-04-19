@@ -11,7 +11,7 @@ const menuRoutes = require('./api/routes/master/m_menus');
 const roleRoutes = require('./api/routes/master/m_roles');
 const employeeRoutes = require('./api/routes/master/m_employees');
 const menuAccessRoutes = require('./api/routes/master/m_menuaccesses');
-const companiesRoutes = require('./api/routes/master/m_companies')
+const companiesRoutes = require('./api/routes/master/m_companies');
 
 //conect to mongo
 //password admin01
@@ -36,7 +36,6 @@ app.use((req,res,next)=>{
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/menus', menuRoutes);
-
 app.use('/api/roles', roleRoutes);
 app.use('/api/employees', employeeRoutes);
 app.use('/api/menuaccesses', menuAccessRoutes);

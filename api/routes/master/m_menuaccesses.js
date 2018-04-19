@@ -45,24 +45,14 @@ router.get('/roles/:id', (req, res, next) => {
     });
 });//end get all role
 
-function GetRole(mRoleId, callback) {
-    MenuAccess.findOne({ role: mRoleId })
-        .exec((err, doc) => {
-            if (doc != null) {
-                return callback(doc);
-            } else {
-                return callback(null)
-            }
-        });
-}
 
 
 //get  by id
 router.get('/:id', (req, res, next) => {
     const id = req.params.id;
     MenuAccess.findById(id)
-        .populate('mMenuId', '_id code name controller parentId createdBy createdDate')
-        .populate('mRoleId', '_id code name description isDelete createdBy updatedBy')
+        .populate('menu', '_id code name controller parentId createdBy createdDate')
+        .populate('role', '_id code name description isDelete createdBy updatedBy')
         .where('isDelete').equals(false)
         .exec()
         .then(result => {
