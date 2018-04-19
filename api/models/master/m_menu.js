@@ -7,7 +7,7 @@ const menuSchema = mongoose.Schema({
     controller: { type: String, required: true},
     parentId: { type: String },
     isDelete:  { type: Boolean, required: true, default: 0 },
-    createdBy : { type: String, required: true },
+    createdBy : { type: String, required: false },
     updatedBy : { type: String},    
 },
 {timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate'}}
