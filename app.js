@@ -39,6 +39,7 @@ app.use('/api/menus', menuRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/employees', employeeRoutes);
 app.use('/api/menuaccesses', menuAccessRoutes);
+app.use('/api/companies', companiesRoutes);
 
 
 app.use((req, res, next)=>{
